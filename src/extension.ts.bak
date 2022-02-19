@@ -1,0 +1,58 @@
+import * as vscode from "vscode";
+import { HelloWorldPanel } from "./HelloWorldPanel";
+
+export function activate(context: vscode.ExtensionContext) {
+  context.subscriptions.push(
+    vscode.commands.registerCommand("todo.helloWorld", () => {
+      HelloWorldPanel.createOrShow(context.extensionUri);
+    })
+  );
+
+  // let terminal: vscode.Terminal;
+  context.subscriptions.push(
+    vscode.commands.registerCommand("todo.askQuestion", async () => {
+      const wsedit = new vscode.WorkspaceEdit();
+      if (vscode.workspace.workspaceFolders) {
+        // if (terminal) {
+        //   terminal.dispose();
+        // }
+        // terminal = vscode.window.createTerminal("xx");
+        // const answer = await vscode.window.showInputBox({
+        //   placeHolder: "folder name",
+        //   prompt: "set folder name",
+        // });
+        // terminal.sendText("mkdir " + answer);
+        // const wsPath = vscode.workspace.workspaceFolders[0].uri.path; // gets the path of the first workspace folder
+        // console.log(vscode.workspace.workspaceFolders[0].uri);
+        // const result = vscode.workspace.updateWorkspaceFolders(
+        //   vscode.workspace.workspaceFolders.length,
+        //   null,
+        //   {
+        //     uri: vscode.workspace.workspaceFolders[0].uri,
+        //     name: "quack",
+        //   }
+        // );
+        // console.log(result);
+        // if (answer) {
+        //   const filePath = vscode.Uri.file(wsPath + "/hello" + answer);
+        //   vscode.window.showInformationMessage(filePath.toString());
+        //   wsedit.createFile(filePath, { ignoreIfExists: true });
+        //   vscode.workspace.applyEdit(wsedit);
+        //   vscode.window.showInformationMessage(
+        //     "Created a new file: hello/world.md"
+        //   );
+        // }
+      } else {
+        vscode.window.showInformationMessage("No Workspace");
+      }
+      vscode.workspace.onDidChangeWorkspaceFolders((e) => {
+        console.log("workspace event", e);
+      });
+    })
+  );
+}
+
+const createFile = () => {};
+
+// this method is called when your extension is deactivated
+export function deactivate() {}
